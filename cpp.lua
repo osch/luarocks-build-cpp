@@ -5,10 +5,19 @@ local cpp = {}
 
 local unpack = unpack or table.unpack
 
+local function tryrequire(...)
+    local lastErr
+    for _, n in ipairs({...}) do
+        local ok, m = pcall(function() return require(n) end)
+        if ok then return m else lastErr = m end
+    end
+    error(lastErr)
+end
+
 local fs = require("luarocks.fs")
 local path = require("luarocks.path")
 local util = require("luarocks.util")
-local cfg = require("luarocks.cfg")
+local cfg = tryrequire("luarocks.cfg", "luarocks.core.cfg")
 local dir = require("luarocks.dir")
 
 --- Run a command displaying its execution on standard output.
