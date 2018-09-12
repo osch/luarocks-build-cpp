@@ -1,5 +1,9 @@
 # luarocks-build-cpp
 
+[![Build Status](https://travis-ci.org/osch/luarocks-build-cpp.png?branch=master)](https://travis-ci.org/osch/luarocks-build-cpp)
+[![Build status](https://ci.appveyor.com/api/projects/status/0ooqnhlu5rh0q8cd/branch/master?svg=true)](https://ci.appveyor.com/project/osch/luarocks-build-cpp/branch/master)
+
+
 A fork of built-in build system for C++ rocks. 
 Specify "cpp" as build type and "luarocks-build-cpp" as dependency to use it. 
 

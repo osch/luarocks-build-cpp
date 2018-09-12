@@ -1,0 +1,52 @@
+language: c
+
+sudo: false
+
+matrix:
+  include:
+    - env: LUA="5.1" LUAROCKS="2.4.4"
+      os: linux
+    - env: LUA="5.2" LUAROCKS="2.4.4"
+      os: linux
+    - env: LUA="5.3" LUAROCKS="2.4.4"
+      os: linux
+    - env: LUA="5.3" LUAROCKS="3.0.2"
+      os: linux
+    - env: LUA="5.1" LUAROCKS="2.4.4"
+      os: osx
+    - env: LUA="5.3" LUAROCKS="2.4.4"
+      os: osx
+    - env: LUA="5.3" LUAROCKS="3.0.2"
+      os: osx
+
+cache:
+  directories:
+    - here
+    - $HOME/.cache/pip
+
+branches:
+  only:
+    - master
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$PATH:~/Library/Python/2.7/bin/; fi
+  - pip2 install --user hererocks
+  - hererocks here --luarocks $LUAROCKS --lua $LUA
+  - source here/bin/activate
+
+install:
+  - luarocks make rockspecs/luarocks-build-cpp-scm-0.rockspec
+
+script: 
+  - luarocks path
+  - cd tests
+  - lua info.lua
+  - cd test01
+  - luarocks make moduletest01-scm-0.rockspec
+  - cd ..
+  - lua test01.lua
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
