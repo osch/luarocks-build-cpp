@@ -18,9 +18,8 @@ environment:
 
 platform:
   - x64
-
-#  - x86
-#  - mingw
+  - x86
+  - mingw
 
 cache:
   - c:\hererocks -> appveyor.yml
